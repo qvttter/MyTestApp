@@ -13,9 +13,11 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
     tools:context="com.example.zhoul_pc.mytestapp.MainActivity">
-
-    <TextView
+    <Button
+        android:id="@+id/btn_firework_list"
+        android:text="烟花下拉"
+        android:background="@drawable/shape_common_btn_bg"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="niHao" />
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="col_common_red">#cc0000</color>
+    <color name="col_white">#ffffff</color>
+    <color name="col_common_blue">#6699ff</color>
 </resources>
