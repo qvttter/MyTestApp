@@ -2,8 +2,11 @@ package com.example.zhoul_pc.mytestapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,21 +18,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
+import com.example.zhoul_pc.mytestapp.Adapter.FireworkListAdapter;
 import com.example.zhoul_pc.mytestapp.UI.Activity.FireworkListActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    @BindView(R.id.btn_firework_list)
-    Button btnFireworkList;
+//    @BindView(R.id.btn_firework_list)
+//    Button btnFireworkList;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+
+    @BindView(R.id.pullToRefresh)
+    FireworkyPullToRefreshLayout refreshLayout;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+
+    private FireworkListAdapter adapter;
+    private List<String> list;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,17 +78,55 @@ public class MainActivity extends AppCompatActivity
     private void initView(){
         toolbar.setTitle("首页");
         setSupportActionBar(toolbar);
+
+        list = new ArrayList<>();
+        handler = new Handler();
+        for (int i = 0; i < 60; i++) {
+            String str = "我是第"+ i + "条数据";
+            list.add(str);
+        }
+        adapter = new FireworkListAdapter(list,this);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
 
     private void initEvent(){
-        btnFireworkList.setOnClickListener(new View.OnClickListener() {
+//        btnFireworkList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, FireworkListActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        refreshLayout.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, FireworkListActivity.class);
-                startActivity(intent);
+            public void onRefresh() {
+                relay(3000);
             }
         });
     }
+
+    private void resetDate(){
+        list.clear();
+        for (int i = 0; i < 60; i++) {
+            String str = "我是第"+ i +";"+System.currentTimeMillis();
+            list.add(str);
+        }
+        refreshLayout.setRefreshing(false);
+    }
+
+    private void relay(int time){
+        handler.postDelayed(mRunnable, time);
+    }
+
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            resetDate();
+        }
+    };
 
     @Override
     public void onBackPressed() {
