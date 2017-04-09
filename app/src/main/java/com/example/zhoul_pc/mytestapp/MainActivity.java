@@ -1,12 +1,12 @@
 package com.example.zhoul_pc.mytestapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,11 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 
-import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
-import com.example.zhoul_pc.mytestapp.Adapter.FireworkListAdapter;
-import com.example.zhoul_pc.mytestapp.UI.Activity.FireworkListActivity;
+import com.example.zhoul_pc.mytestapp.Adapter.ACPageAdapter;
+import com.example.zhoul_pc.mytestapp.UI.Activity.Fragment.ACEntertainmentFragment;
+import com.example.zhoul_pc.mytestapp.UI.Activity.Fragment.ACGameFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-//    @BindView(R.id.btn_firework_list)
+    //    @BindView(R.id.btn_firework_list)
 //    Button btnFireworkList;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -39,14 +38,21 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
-    @BindView(R.id.pullToRefresh)
-    FireworkyPullToRefreshLayout refreshLayout;
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    @BindView(R.id.tabLayout)
+    TabLayout tabLayout;
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
 
-    private FireworkListAdapter adapter;
+    //    @BindView(R.id.pullToRefresh)
+//    FireworkyPullToRefreshLayout refreshLayout;
+//    @BindView(R.id.recyclerView)
+//    RecyclerView recyclerView;
+    public static final String AC_TYPE = "ac_type";
     private List<String> list;
     private Handler handler;
+    private ACPageAdapter acPageAdapter;
+    private List<String> titles;
+    private List<Fragment> fragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +71,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -75,23 +81,41 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void initView(){
+    private void initView() {
         toolbar.setTitle("首页");
         setSupportActionBar(toolbar);
 
-        list = new ArrayList<>();
-        handler = new Handler();
-        for (int i = 0; i < 60; i++) {
-            String str = "我是第"+ i + "条数据";
-            list.add(str);
-        }
-        adapter = new FireworkListAdapter(list,this);
+        fragments = new ArrayList<>();
+        fragments.add(ACEntertainmentFragment.newInstance("ac_entertainment"));
+        fragments.add(ACGameFragment.newInstance("doc"));
+        fragments.add(ACGameFragment.newInstance("test"));
+        fragments.add(ACGameFragment.newInstance("question_bank"));
+        fragments.add(ACGameFragment.newInstance("question_bank"));
+        fragments.add(ACGameFragment.newInstance("question_bank"));
+        fragments.add(ACGameFragment.newInstance("question_bank"));
+        fragments.add(ACGameFragment.newInstance("question_bank"));
+        fragments.add(ACGameFragment.newInstance("question_bank"));
+        titles = new ArrayList<>();
+        titles.add("娱乐");
+        titles.add("游戏");
+        titles.add("动画");
+        titles.add("音乐");
+        titles.add("舞蹈·彼女");
+        titles.add("影视");
+        titles.add("鱼塘");
+        titles.add("科技");
+        titles.add("体育");
+        acPageAdapter = new ACPageAdapter(getSupportFragmentManager(), fragments, titles);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+
+        viewPager.setAdapter(acPageAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(adapter);
     }
 
-    private void initEvent(){
+    private void initEvent() {
 //        btnFireworkList.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -100,24 +124,24 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 
-        refreshLayout.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                relay(3000);
-            }
-        });
+//        refreshLayout.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                relay(3000);
+//            }
+//        });
     }
 
-    private void resetDate(){
+    private void resetDate() {
         list.clear();
         for (int i = 0; i < 60; i++) {
-            String str = "我是第"+ i +";"+System.currentTimeMillis();
+            String str = "我是第" + i + ";" + System.currentTimeMillis();
             list.add(str);
         }
-        refreshLayout.setRefreshing(false);
+//        refreshLayout.setRefreshing(false);
     }
 
-    private void relay(int time){
+    private void relay(int time) {
         handler.postDelayed(mRunnable, time);
     }
 

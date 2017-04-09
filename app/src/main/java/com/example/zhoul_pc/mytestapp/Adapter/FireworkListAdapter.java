@@ -5,9 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.zhoul_pc.mytestapp.R;
+import com.example.zhoul_pc.mytestapp.retrofit.bean.ACEntertainmentEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +20,10 @@ import java.util.List;
  */
 
 public class FireworkListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<String> list;
+    private List<ACEntertainmentEntity.DataBean.HitsBean> list;
     private Context context;
 
-    public FireworkListAdapter(List<String> list,Context context) {
+    public FireworkListAdapter(List<ACEntertainmentEntity.DataBean.HitsBean> list,Context context) {
         this.context = context;
         this.list = list;
     }
@@ -35,9 +38,11 @@ public class FireworkListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-        final String str = list.get(position);
-
-        itemViewHolder.tvTxt.setText(str);
+        final ACEntertainmentEntity.DataBean.HitsBean hitsBean = list.get(position);
+        itemViewHolder.tvTxt.setText(hitsBean.getTitle());
+        Glide.with(context)
+                .load(hitsBean.getImage())
+                .into(itemViewHolder.ivCover);
     }
 
     @Override
@@ -47,15 +52,17 @@ public class FireworkListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private static class ItemViewHolder extends RecyclerView.ViewHolder {
         private TextView tvTxt;
+        private ImageView ivCover;
 
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             tvTxt = (TextView) itemView.findViewById(R.id.tv_txt);
+            ivCover = (ImageView) itemView.findViewById(R.id.iv_cover);
         }
     }
 
-    public void setList(ArrayList<String> list) {
+    public void setList(ArrayList<ACEntertainmentEntity.DataBean.HitsBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
