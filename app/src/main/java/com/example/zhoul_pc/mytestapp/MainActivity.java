@@ -1,5 +1,6 @@
 package com.example.zhoul_pc.mytestapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -18,8 +19,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.zhoul_pc.mytestapp.Adapter.ACPageAdapter;
+import com.example.zhoul_pc.mytestapp.UI.Activity.AddProjectActivity;
 import com.example.zhoul_pc.mytestapp.UI.Activity.Fragment.ACEntertainmentFragment;
 import com.example.zhoul_pc.mytestapp.UI.Activity.Fragment.ACGameFragment;
+import com.example.zhoul_pc.mytestapp.UI.Activity.MyAlbumActivity;
+import com.example.zhoul_pc.mytestapp.UI.Activity.PaintActivity;
+import com.example.zhoul_pc.mytestapp.view.JavBusActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -177,6 +182,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(MainActivity.this, AddProjectActivity.class));
             return true;
         }
 
@@ -192,7 +198,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+//            startActivity(new Intent(MainActivity.this, PaintActivity.class));
+            startActivity(new Intent(MainActivity.this, MyAlbumActivity.class));
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -200,7 +207,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+            startActivity(new Intent(MainActivity.this, JavBusActivity.class));
         }
 
         drawer.closeDrawer(GravityCompat.START);

@@ -10,4 +10,10 @@ public class App extends Application{
     public static synchronized App getInstance(){
         return instance;
     }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        instance=this;
+    }
 }

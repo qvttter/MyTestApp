@@ -1,14 +1,25 @@
 package com.example.zhoul_pc.mytestapp.UI.Activity.Fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.zhoul_pc.mytestapp.MainActivity;
 import com.example.zhoul_pc.mytestapp.R;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.net.URL;
 
 import butterknife.ButterKnife;
 
@@ -35,7 +46,6 @@ public class ACGameFragment extends Fragment {
     }
 
     private void initView() {
-
     }
 
     public static ACGameFragment newInstance(String text) {

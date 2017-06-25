@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by lili on 2017/4/9.
+ * acfun,娱乐板块
  */
 public class ACEntertainmentFragment extends Fragment implements IACEntertainmentView {
     private View rootView;
@@ -36,8 +37,6 @@ public class ACEntertainmentFragment extends Fragment implements IACEntertainmen
 //    FireworkyPullToRefreshLayout refreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.btn_getList)
-    Button btnGetList;
 
     private FireworkListAdapter adapter;
     private ACEntertainmentPresenter presenter;
@@ -70,12 +69,6 @@ public class ACEntertainmentFragment extends Fragment implements IACEntertainmen
 //                        getList();
 //                    }
 //                });
-        btnGetList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getList();
-            }
-        });
     }
 
     private void initView() {
@@ -83,7 +76,7 @@ public class ACEntertainmentFragment extends Fragment implements IACEntertainmen
         adapter = new FireworkListAdapter(new ArrayList<ACEntertainmentEntity.DataBean.HitsBean>(),getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
-
+        getList();
     }
 
     @Override
@@ -103,6 +96,6 @@ public class ACEntertainmentFragment extends Fragment implements IACEntertainmen
     }
 
     private void getList(){
-        presenter.getACEntertainmentList(page);
+        //presenter.getACEntertainmentList(page);
     }
 }
