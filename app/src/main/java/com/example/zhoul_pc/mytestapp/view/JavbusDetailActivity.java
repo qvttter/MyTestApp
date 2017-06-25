@@ -76,8 +76,10 @@ public class JavbusDetailActivity extends BaseActivity {
                 entity.setTitle(container.select("h3").text());
                 Elements rowMovie = container.select("div.movie");
                 Elements screenCap = rowMovie.select("div.screencap");
-                String img = screenCap.select("a.bigImage").attr("href");
                 entity.setMainImg(screenCap.select("a.bigImage").attr("href"));
+                Elements info = rowMovie.select("div.info");
+                String str = info.select("p").text();
+                entity.setFanhao(str);
 //                Elements waterfall = container.select("div#waterfall");
 //                Elements item = waterfall.select("div.item masonry-brick");
 
