@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.zhoul_pc.mytestapp.Adapter.JavItemAdapter;
 import com.example.zhoul_pc.mytestapp.Bean.JavbusDetailEntity;
 import com.example.zhoul_pc.mytestapp.R;
 
@@ -33,6 +34,7 @@ public class JavbusDetailActivity extends BaseActivity {
     ImageView ivMainImg;
 
     Context context;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class JavbusDetailActivity extends BaseActivity {
             Document doc = null;
             JavbusDetailEntity entity = new JavbusDetailEntity();
             try {
-                doc = Jsoup.connect("https://www.javbus2.com/GVG-126").get();
+                doc = Jsoup.connect(url).get();
                 Element body = doc.body();
                 //Elements containerFluid = body.select("div.container-fluid");//class型用“.”，id的用#
                 Elements container = body.select("div.container");
@@ -96,6 +98,7 @@ public class JavbusDetailActivity extends BaseActivity {
 
 
     private void initView() {
+        url = getIntent().getStringExtra(JavItemAdapter.URL);
         context = this;
     }
 

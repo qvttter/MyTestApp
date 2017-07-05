@@ -5,4 +5,5 @@ package com.example.zhoul_pc.mytestapp.common;
  */
 public class BaseUrl {
     public static final String BASE_URL_AC = "http://www.acfun.cn/";
+    public static final String BASE_JAV2 = "https://www.javbus2.com/";
 }
