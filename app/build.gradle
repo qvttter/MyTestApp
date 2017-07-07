@@ -37,4 +37,5 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'com.afollestad.material-dialogs:core:0.9.4.5'
     compile 'com.turn:ttorrent-core:1.5'
+    compile 'com.lovedise:permissiongen:0.0.6'
 }

@@ -1,11 +1,13 @@
 package com.example.zhoul_pc.mytestapp.view;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,8 @@ import com.bumptech.glide.Glide;
 import com.example.zhoul_pc.mytestapp.Adapter.JavItemAdapter;
 import com.example.zhoul_pc.mytestapp.Bean.JavbusDetailEntity;
 import com.example.zhoul_pc.mytestapp.R;
+import com.example.zhoul_pc.mytestapp.common.BitDownloadUtils;
+import com.example.zhoul_pc.mytestapp.common.ToastUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,9 +24,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import kr.co.namee.permissiongen.PermissionFail;
+import kr.co.namee.permissiongen.PermissionGen;
+import kr.co.namee.permissiongen.PermissionSuccess;
 
 /**
  * Created by lili on 2017/6/24.
@@ -98,11 +106,46 @@ public class JavbusDetailActivity extends BaseActivity {
 
 
     private void initView() {
+        PermissionGen.with(this)
+                .addRequestCode(100)
+                .permissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                .request();
+
         url = getIntent().getStringExtra(JavItemAdapter.URL);
         context = this;
     }
 
     private void initEvent() {
+        ivMainImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    BitDownloadUtils.download();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+
+    }
+
+
+    @PermissionSuccess(requestCode = 100)
+    public void doSomething() {
+    }
+
+    @PermissionFail(requestCode = 100)
+    public void doFailSomething() {
+        ToastUtils.shortToast(this,"点允许啊傻叉！");
     }
 }
