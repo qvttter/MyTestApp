@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity
     private ACPageAdapter acPageAdapter;
     private List<String> titles;
     private List<Fragment> fragments;
+    private String asd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
