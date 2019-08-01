@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity
     private List<Fragment> fragments;
     private String asd;
     private int zxc = 0;
+    private String thisISError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
