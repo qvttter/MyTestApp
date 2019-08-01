@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity
     private String asd;
     private int zxc = 0;
     private String thisISError;
+    private Long number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
