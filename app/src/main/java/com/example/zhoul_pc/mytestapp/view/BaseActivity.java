@@ -20,7 +20,7 @@ public class BaseActivity extends AppCompatActivity{
 
     protected void showDialog(String msg){
         materialDialog = new MaterialDialog.Builder(this)
-                .title("提示")
+                .title("提示,23e")
                 .content(msg)
                 .progress(true,0)
                 .show();
